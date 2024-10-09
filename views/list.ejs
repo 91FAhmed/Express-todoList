@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To do list</title>
+  </head>
+  <body>
+    <% if(dayName === "sunday"){ %>
+    <h1 style="color: green">Its's a <%= dayName %>!</h1>
+    <% } else{ %>
+    <h1 style="color: purple">Its's a <%= dayName %>!</h1>
+    <% } %>
+
+    <ul>
+      <li>Food</li>
+      <li>Grocery</li>
+      <li>Fish</li>
+
+      <% for(let i = 0; i<listIt.length; i++) { %>
+      <li><%= listIt[i] %></li>
+      <% } %>
+    </ul>
+
+    <form method="post" action="/">
+      <input
+        type="text"
+        name="form_input"
+        alt="input data"
+        placeholder="Enter Your Todos"
+      />
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>
