@@ -6,6 +6,8 @@ const app = express();
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public"));
+app.use(express.json());
 
 let listItem = [];
 
@@ -43,8 +45,12 @@ app.get("/", (req, res) => {
 });
 
 app.post("/", (req, res) => {
-  listItem.push(req.body.form_input);
-  res.redirect("/");
+  if (req.body.form_input === "") {
+    res.redirect("/");
+  } else {
+    listItem.push(req.body.form_input);
+    res.redirect("/");
+  }
 });
 
 app.listen(3000, () => {

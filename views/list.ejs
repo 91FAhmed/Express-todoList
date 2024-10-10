@@ -4,32 +4,37 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To do list</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <% if(dayName === "sunday"){ %>
-    <h1 style="color: green">Its's a <%= dayName %>!</h1>
-    <% } else{ %>
-    <h1 style="color: purple">Its's a <%= dayName %>!</h1>
-    <% } %>
-
-    <ul>
-      <li>Food</li>
-      <li>Grocery</li>
-      <li>Fish</li>
-
-      <% for(let i = 0; i<listIt.length; i++) { %>
-      <li><%= listIt[i] %></li>
+    <div class="box" id="heading">
+      <% if(dayName === "sunday"){ %>
+      <h1>Its's a <%= dayName %></h1>
+      <% } else{ %>
+      <h1>Its's a <%= dayName %></h1>
       <% } %>
-    </ul>
+    </div>
 
-    <form method="post" action="/">
+    <div class="box">
+      <% for(let i = 0; i<listIt.length; i++) { %>
+      <div class="item">
+         <input type="checkbox" >
+      <p><%= listIt[i] %></p>
+      </div>
+      
+      <% } %>
+    
+   
+    <form method="post" action="/" class="item">
       <input
         type="text"
         name="form_input"
         alt="input data"
         placeholder="Enter Your Todos"
+        autocomplete="off"
       />
-      <button type="submit">Submit</button>
+      <button type="submit">+</button>
     </form>
+    </div>
   </body>
 </html>
