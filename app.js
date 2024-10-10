@@ -10,14 +10,15 @@ app.use(express.static("public"));
 app.use(express.json());
 
 let listItem = [];
+let workItem = [];
+const today = new Date();
+const current = today.toLocaleString("en-us", {
+  weekday: "long",
+  day: "numeric",
+  month: "long",
+});
 
 app.get("/", (req, res) => {
-  const today = new Date();
-  const current = today.toLocaleString("en-us", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-  });
   console.log(current);
 
   let day = "";
@@ -41,16 +42,29 @@ app.get("/", (req, res) => {
   //     default:
   //       "Error";
   //   }
-  res.render("list", { dayName: current, listIt: listItem });
+  res.render("list", { dayName: current, listIt: listItem, pageName: null });
 });
 
 app.post("/", (req, res) => {
-  if (req.body.form_input === "") {
-    res.redirect("/");
+  if (req.body.pageName === "Work") {
+    if (req.body.form_input === "") {
+      res.redirect("/");
+    } else {
+      workItem.push(req.body.form_input);
+      res.redirect("/work");
+    }
   } else {
-    listItem.push(req.body.form_input);
-    res.redirect("/");
+    if (req.body.form_input === "") {
+      res.redirect("/");
+    } else {
+      listItem.push(req.body.form_input);
+      res.redirect("/");
+    }
   }
+});
+
+app.get("/work", (req, res) => {
+  res.render("list", { dayName: current, listIt: workItem, pageName: "Work" });
 });
 
 app.listen(3000, () => {
