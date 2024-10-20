@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>To do list</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
+
+ <%- include("header"); -%> 
     <div class="box" id="heading">
       <% if(dayName === "sunday"){ %>
       <h1>Its's a <%= dayName %></h1>
@@ -15,28 +8,36 @@
       <% } %>
     </div>
        <div class="box" id="heading">
-        <h1><%= pageName %> </h1>
+  
       </div>
     <div class="box">
-      <% for(let i = 0; i<listIt.length; i++) { %>
+      <!-- <% for(let i = 0; i<listIt.length; i++) { %>
       <div class="item">
          <input type="checkbox" >
-      <p><%= listIt[i] %></p>
+      <p><%= listIt[i].name %></p>
       </div>
-      
       <% } %>
-    
+     -->
+
+     <% listIt.forEach((item) =>{ %>
+      <form action="/delete" method="post" >
+       <div class="item">
+           <input type="checkbox" onclick="this.form.submit()" >
+           <p> <%= item.name %> </p>
+        </div>
+      </form>   
+     <% }) %>
    
     <form method="post" action="/" class="item">
       <input
         type="text"
         name="form_input"
         alt="input data"
-        placeholder="Enter Your Todos"
+        placeholder="Enter Your Todoss"
         autocomplete="off"
       />
-      <button type="submit">+</button>
+      <button type="submit" name="input_btn" value=<%= listVal %>>+</button>
     </form>
     </div>
-  </body>
+ <%- include("footer"); -%>
 </html>
