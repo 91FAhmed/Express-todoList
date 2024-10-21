@@ -40,8 +40,23 @@ app.get("/", (req, res) => {
   // Item.find({})
   // .then((res) => console.log(res.))
   // .catch((error) => console.log("The Item could not be found", error));
+  Item.find({})
+    .then(function (value) {
+      if (value.length === 0) {
+        Item.insertMany([
+          { name: "Welcome" },
+          { name: "Press '+' to add new todos" },
+          { name: "<--- Hit 'Checkbox' to remove Completed todos" },
+        ]);
+      } else {
+        console.log("Has items");
+      }
+    })
+    .catch(function (error) {
+      throw new customError("Failed to find Item.find length");
+    });
 
-  let day = "";
+  // let day = "";
 
   //   switch (current) {
   //     case 1:
@@ -89,6 +104,32 @@ app.post("/", (req, res) => {
   }
 });
 
+app.post("/delete", (req, res) => {
+  const ObjectId = req.body.checkbox;
+
+  async function deleteById(id) {
+    try {
+      const trimmedId = id.trim();
+      if (trimmedId.length != 24) {
+        throw new Error("The id is not in 24 charecters long");
+      }
+
+      const ObjId = mongoose.Types.ObjectId.createFromHexString(trimmedId);
+      const deletedDoc = await Item.findByIdAndDelete(ObjId);
+
+      if (deletedDoc) {
+        res.redirect("/");
+        console.log("Successfully deleted document");
+      } else {
+        console.log("No documents found");
+      }
+    } catch (error) {
+      console.log("error Deleting", error);
+    }
+  }
+  deleteById(ObjectId);
+});
+
 //custom Error
 class customError extends Error {
   constructor(message) {
@@ -118,3 +159,4 @@ app.listen(4000, function () {
     throw new customError("Server Failed");
   }
 });
+``;

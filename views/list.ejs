@@ -22,7 +22,7 @@
      <% listIt.forEach((item) =>{ %>
       <form action="/delete" method="post" >
        <div class="item">
-           <input type="checkbox" onclick="this.form.submit()" >
+           <input name="checkbox" type="checkbox" value=" <%= item._id %> " onclick="this.form.submit()"  >
            <p> <%= item.name %> </p>
         </div>
       </form>   
